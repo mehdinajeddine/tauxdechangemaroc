@@ -42,13 +42,17 @@ const Convert = () => {
   useEffect(() => {
     const getData = async () => {
       const params = { libDevise: "", date: "2022-01-12T21:44:09.921Z" };
+      const api_key = process.env.REACT_APP_BAM_API_KEY
+        ? process.env.REACT_APP_BAM_API_KEY
+        : "";
       const headers = {
         headers: {
-          "Ocp-Apim-Subscription-Key": "79fc75e4ae334e388a444d060670388d",
+          "Ocp-Apim-Subscription-Key": api_key,
         },
       };
       const data = await axios.get(
-        "https://api.centralbankofmorocco.ma/cours/Version1/api/CoursBBE?libDevise=&date=2022-01-12T21:44:09.921Z",
+        "https://api.centralbankofmorocco.ma/cours/Version1/api/CoursBBE?libDevise=&date=" +
+          Date.now(),
 
         headers
       );
@@ -99,7 +103,7 @@ const Convert = () => {
           </div>
         </div>
         <input
-          type="number"
+          type="text"
           value={source}
           onChange={(e) => setSource(e.target.value)}
         />
@@ -130,7 +134,7 @@ const Convert = () => {
       <div>
         <input
           value={result}
-          type="number"
+          type="text"
           onChange={(e) => setResult(e.target.value)}
         />
         <select value={cresult} onChange={(e) => setCresult(e.target.value)}>
